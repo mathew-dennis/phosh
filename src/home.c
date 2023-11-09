@@ -41,6 +41,7 @@
  */
 enum {
   OSK_ACTIVATED,
+  OSK_ACTIVITY_TRIGGERED,
   N_SIGNALS
 };
 static guint signals[N_SIGNALS] = { 0 };
@@ -364,6 +365,8 @@ on_powerbar_pressed (PhoshHome *self, PhoshOskManager *osk, PhoshShell *shell)
     g_debug ("OSK toggled with pressed signal");
     phosh_osk_manager_set_visible (self->osk, osk_new_state);
   }
+  phosh_trigger_feedback ("osk-activity-triggered");
+  g_signal_emit (self, signals[OSK_ACTIVITY_TRIGGERED], 0);
 }
 
 
@@ -656,6 +659,8 @@ phosh_home_constructed (GObject *object)
                    self, "osk-enabled", G_SETTINGS_BIND_GET);
 
   g_signal_connect (self, "notify::drag-state", G_CALLBACK (on_drag_state_changed), NULL);
+   
+  phosh_connect_feedback (self);
 
   g_object_set_data (G_OBJECT (self->click_gesture), "phosh-home", self);
   g_object_set_data (G_OBJECT (self->osk_toggle_long_press), "phosh-home", self);
@@ -698,6 +703,10 @@ phosh_home_class_init (PhoshHomeClass *klass)
   drag_surface_class->dragged = phosh_home_dragged;
 
   signals[OSK_ACTIVATED] = g_signal_new ("osk-activated",
+      G_TYPE_FROM_CLASS (klass), G_SIGNAL_RUN_LAST, 0, NULL, NULL,
+      NULL, G_TYPE_NONE, 0);
+
+  signals[OSK_ACTIVITY_TRIGGERED] = g_signal_new ("osk-activated",
       G_TYPE_FROM_CLASS (klass), G_SIGNAL_RUN_LAST, 0, NULL, NULL,
       NULL, G_TYPE_NONE, 0);
 
