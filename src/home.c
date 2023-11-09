@@ -706,7 +706,7 @@ phosh_home_class_init (PhoshHomeClass *klass)
       G_TYPE_FROM_CLASS (klass), G_SIGNAL_RUN_LAST, 0, NULL, NULL,
       NULL, G_TYPE_NONE, 0);
 
-  signals[OSK_ACTIVITY_TRIGGERED] = g_signal_new ("osk-activated",
+  signals[OSK_ACTIVITY_TRIGGERED] = g_signal_new ("osk-activity-triggered",
       G_TYPE_FROM_CLASS (klass), G_SIGNAL_RUN_LAST, 0, NULL, NULL,
       NULL, G_TYPE_NONE, 0);
 
