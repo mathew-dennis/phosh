@@ -659,8 +659,6 @@ phosh_home_constructed (GObject *object)
                    self, "osk-enabled", G_SETTINGS_BIND_GET);
 
   g_signal_connect (self, "notify::drag-state", G_CALLBACK (on_drag_state_changed), NULL);
-   
-  phosh_connect_feedback (self);
 
   g_object_set_data (G_OBJECT (self->click_gesture), "phosh-home", self);
   g_object_set_data (G_OBJECT (self->osk_toggle_long_press), "phosh-home", self);
