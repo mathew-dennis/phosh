@@ -15,6 +15,7 @@
 #include "shell.h"
 #include "phosh-enums.h"
 #include "osk-manager.h"
+#include "feedback-manager.h"
 #include "util.h"
 
 #include <handy.h>
