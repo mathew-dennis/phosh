@@ -179,8 +179,9 @@ update_drag_handle (PhoshHome *self, gboolean commit)
   PhoshDragSurfaceDragMode drag_mode = PHOSH_DRAG_SURFACE_DRAG_MODE_HANDLE;
   PhoshDragSurfaceState drag_state = phosh_drag_surface_get_drag_state (PHOSH_DRAG_SURFACE (self));
    
-  /* disable powerbar gesture when dragging */
+  /* disable powerbar gestures when dragging */
     gtk_event_controller_reset(GTK_EVENT_CONTROLLER(self->osk_toggle_long_press));
+    gtk_event_controller_reset(GTK_EVENT_CONTROLLER(self->swipe_gesture));
 
   /* Update the handle's arrow and dragability */
   if (phosh_overview_has_running_activities (PHOSH_OVERVIEW (self->overview)) == FALSE &&
