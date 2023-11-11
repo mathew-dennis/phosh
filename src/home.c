@@ -28,7 +28,6 @@
 
 #define POWERBAR_ACTIVE_CLASS "p-active"
 #define POWERBAR_FAILED_CLASS "p-failed"
-#define HOMEBAR_OPAQUE_CLASS "opaque"
 
 /**
  * PhoshHome:
@@ -106,7 +105,6 @@ phosh_home_update_home_bar (PhoshHome *self)
   }
 
   gtk_stack_set_visible_child_name (GTK_STACK (self->stack), visible_child);
-  phosh_util_toggle_style_class (self->stack, HOMEBAR_OPAQUE_CLASS , home_bar_transparent);
   g_debug ("switched home-bar visible child");
   
   /* debug stuff: check the gesture state to see if the touch cancel is functing */
@@ -799,7 +797,6 @@ phosh_home_new (struct zwlr_layer_shell_v1 *layer_shell,
                        "namespace", "phosh home",
                        /* drag-surface */
                        "layer-shell-effects", layer_shell_effects,
-                       "exclusive", PHOSH_HOME_BUTTON_HEIGHT,
                        "threshold", PHOSH_HOME_DRAG_THRESHOLD,
                        NULL);
 }
