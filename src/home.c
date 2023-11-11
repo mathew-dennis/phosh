@@ -367,7 +367,7 @@ on_powerbar_pressed (PhoshHome *self, PhoshOskManager *osk, PhoshShell *shell)
     g_debug ("OSK toggled with pressed signal");
     phosh_osk_manager_set_visible (self->osk, osk_new_state);
   }
-  phosh_trigger_feedback ("osk-activity-triggered");
+  phosh_trigger_feedback ("button-pressed");
   g_signal_emit (self, signals[OSK_ACTIVITY_TRIGGERED], 0);
 }
 
