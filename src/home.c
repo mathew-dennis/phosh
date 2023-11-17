@@ -28,6 +28,7 @@
 
 #define POWERBAR_ACTIVE_CLASS "p-active"
 #define POWERBAR_FAILED_CLASS "p-failed"
+#define HOMEBAR_OPAQUE_CLASS "opaque"
 
 /**
  * PhoshHome:
@@ -96,8 +97,6 @@ phosh_home_update_home_bar (PhoshHome *self)
 
   PhoshDragSurfaceState drag_state = phosh_drag_surface_get_drag_state (PHOSH_DRAG_SURFACE (self));
  
-  g_debug ("toggled powerbar visiblity");
-
   if (self->state == PHOSH_HOME_STATE_FOLDED &&
       drag_state != PHOSH_DRAG_SURFACE_STATE_DRAGGED) {
     visible_child = "home-bar-folded";
@@ -105,19 +104,8 @@ phosh_home_update_home_bar (PhoshHome *self)
   }
 
   gtk_stack_set_visible_child_name (GTK_STACK (self->stack), visible_child);
+  phosh_util_toggle_style_class (self->stack, HOMEBAR_OPAQUE_CLASS , home_bar_transparent);
   g_debug ("switched home-bar visible child");
-  
-  /* debug stuff: check the gesture state to see if the touch cancel is functing */
-
-  if (gtk_gesture_get_sequence_state ((self->osk_toggle_long_press), (self->sequence)) == GTK_EVENT_SEQUENCE_DENIED) {
-        g_debug ("longpress is in denied state");
-  } else if (gtk_gesture_get_sequence_state ((self->osk_toggle_long_press), (self->sequence)) == GTK_EVENT_SEQUENCE_NONE) {
-        g_debug ("longpress is in NONE state");
-  } else if (gtk_gesture_get_sequence_state ((self->osk_toggle_long_press), (self->sequence)) == GTK_EVENT_SEQUENCE_CLAIMED) {
-        g_debug ("longpress is in CLAIMED state");
-  } else {
-     g_debug ("longpress is in an unknown state");
-  }
 }
 
 
@@ -797,6 +785,7 @@ phosh_home_new (struct zwlr_layer_shell_v1 *layer_shell,
                        "namespace", "phosh home",
                        /* drag-surface */
                        "layer-shell-effects", layer_shell_effects,
+                       "exclusive", PHOSH_HOME_BUTTON_HEIGHT,
                        "threshold", PHOSH_HOME_DRAG_THRESHOLD,
                        NULL);
 }
