@@ -165,6 +165,9 @@ update_drag_handle (PhoshHome *self, gboolean commit)
   PhoshDragSurfaceDragMode drag_mode = PHOSH_DRAG_SURFACE_DRAG_MODE_HANDLE;
   PhoshDragSurfaceState drag_state = phosh_drag_surface_get_drag_state (PHOSH_DRAG_SURFACE (self));
    
+  /* hide osk when  dragging */
+    phosh_osk_manager_set_visible (self->osk, FALSE );
+    
   /* disable powerbar gestures when dragging */
     gtk_event_controller_reset(GTK_EVENT_CONTROLLER(self->osk_toggle_long_press));
     gtk_event_controller_reset(GTK_EVENT_CONTROLLER(self->swipe_gesture));
