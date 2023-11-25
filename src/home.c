@@ -166,7 +166,7 @@ update_drag_handle (PhoshHome *self, gboolean commit)
   PhoshDragSurfaceState drag_state = phosh_drag_surface_get_drag_state (PHOSH_DRAG_SURFACE (self));
    
   /* hide osk only when  unfolded */
-  if (self->state == PHOSH_HOME_STATE_UNFOLDED && drag_state == PHOSH_DRAG_SURFACE_STATE_FOLDED)
+  if (self->state == PHOSH_HOME_STATE_FOLDED && drag_state == PHOSH_DRAG_SURFACE_STATE_DRAGGED)
     phosh_osk_manager_set_visible (self->osk, FALSE );
     
   /* disable powerbar gestures when dragging */
