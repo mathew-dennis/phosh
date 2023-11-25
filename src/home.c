@@ -165,7 +165,8 @@ update_drag_handle (PhoshHome *self, gboolean commit)
   PhoshDragSurfaceDragMode drag_mode = PHOSH_DRAG_SURFACE_DRAG_MODE_HANDLE;
   PhoshDragSurfaceState drag_state = phosh_drag_surface_get_drag_state (PHOSH_DRAG_SURFACE (self));
    
-  /* hide osk when  dragging */
+  /* hide osk only when  unfolded */
+  if (self->state == PHOSH_HOME_STATE_UNFOLDED && drag_state == PHOSH_DRAG_SURFACE_STATE_FOLDED)
     phosh_osk_manager_set_visible (self->osk, FALSE );
     
   /* disable powerbar gestures when dragging */
@@ -333,7 +334,7 @@ on_powerbar_pressed (PhoshHome *self, PhoshOskManager *osk, PhoshShell *shell)
   g_return_if_fail (PHOSH_IS_HOME (self));
   shell = phosh_shell_get_default ();
   self->osk = phosh_shell_get_osk_manager (shell);
-  
+
   osk_is_available = phosh_osk_manager_get_available (self->osk);
   osk_current_state = phosh_osk_manager_get_visible (self->osk);
   osk_new_state = osk_current_state;
