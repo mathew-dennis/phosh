@@ -42,7 +42,6 @@
  */
 enum {
   OSK_ACTIVATED,
-  OSK_ACTIVITY_TRIGGERED,
   N_SIGNALS
 };
 static guint signals[N_SIGNALS] = { 0 };
@@ -358,7 +357,6 @@ on_powerbar_pressed (PhoshHome *self, PhoshOskManager *osk, PhoshShell *shell)
     phosh_osk_manager_set_visible (self->osk, osk_new_state);
   }
   phosh_trigger_feedback ("button-pressed");
-  g_signal_emit (self, signals[OSK_ACTIVITY_TRIGGERED], 0);
 }
 
 
@@ -693,10 +691,6 @@ phosh_home_class_init (PhoshHomeClass *klass)
   drag_surface_class->dragged = phosh_home_dragged;
 
   signals[OSK_ACTIVATED] = g_signal_new ("osk-activated",
-      G_TYPE_FROM_CLASS (klass), G_SIGNAL_RUN_LAST, 0, NULL, NULL,
-      NULL, G_TYPE_NONE, 0);
-
-  signals[OSK_ACTIVITY_TRIGGERED] = g_signal_new ("osk-activity-triggered",
       G_TYPE_FROM_CLASS (klass), G_SIGNAL_RUN_LAST, 0, NULL, NULL,
       NULL, G_TYPE_NONE, 0);
 
