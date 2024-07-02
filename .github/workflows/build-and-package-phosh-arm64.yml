@@ -3,7 +3,7 @@ name: Build and Package phosh for ARM64
 on:
   push:
     branches:
-      - background-new
+      - ci
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
