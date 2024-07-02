@@ -12,7 +12,6 @@ Build-Depends:
  libjson-glib-dev,
  libsecret-1-dev,
  libsystemd-dev,
- libfeedback-dev (>= 0.2.0),
  libfribidi-dev,
  libgcr-3-dev,
  libgnome-desktop-3-dev,
