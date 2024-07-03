@@ -14,10 +14,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Copy cross file
+      run: cp .github/workflows/arm64-cross.txt arm64-cross.txt
+
     - name: Set up cross-compilation environment and build
       run: |
         set -euxo pipefail  # Enable strict error handling and logging
-        docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace debian:latest /bin/bash -c "
+        docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace debian:latest /bin/bash -c '
           # Set debconf frontend to noninteractive to suppress warnings
           export DEBIAN_FRONTEND=noninteractive && \
           
@@ -30,22 +33,6 @@ jobs:
           # Initialize and update submodules
           git config --global --add safe.directory /workspace && \
           git submodule update --init --recursive || exit 1
-
-          # Create custom cross file for Meson
-          cat > /workspace/arm64-cross.txt <<EOL
-[binaries]
-c = 'aarch64-linux-gnu-gcc'
-cpp = 'aarch64-linux-gnu-g++'
-ar = 'aarch64-linux-gnu-ar'
-strip = 'aarch64-linux-gnu-strip'
-pkgconfig = 'aarch64-linux-gnu-pkg-config'
-
-[host_machine]
-system = 'linux'
-cpu_family = 'aarch64'
-cpu = 'aarch64'
-endian = 'little'
-EOL
 
           # Set up cross-compilation toolchain
           export CC=aarch64-linux-gnu-gcc && \
@@ -62,7 +49,7 @@ EOL
           # Create a source distribution and build the DEB package
           dpkg-source --build . || exit 1
           debuild -us -uc -b -a arm64 || exit 1
-        "
+        '
 
     - name: Upload DEB package
       uses: actions/upload-artifact@v3
