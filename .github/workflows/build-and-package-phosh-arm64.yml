@@ -27,7 +27,9 @@ jobs:
           # Update package list and install essential packages
           apt-get update && \
           apt-get install -y build-essential meson ninja-build git \
-                             crossbuild-essential-arm64 && \
+                             crossbuild-essential-arm64 \
+                             pkg-config-aarch64-linux-gnu \
+                             libecal-2.0-dev:arm64 && \
           apt-get -y build-dep . || exit 1
 
           # Initialize and update submodules
@@ -40,7 +42,8 @@ jobs:
           export AR=aarch64-linux-gnu-ar && \
           export AS=aarch64-linux-gnu-as && \
           export LD=aarch64-linux-gnu-ld && \
-          export STRIP=aarch64-linux-gnu-strip || exit 1
+          export STRIP=aarch64-linux-gnu-strip && \
+          export PKG_CONFIG=aarch64-linux-gnu-pkg-config || exit 1
 
           # Create build directory and configure for ARM64
           meson setup _build --cross-file /workspace/arm64-cross.txt || exit 1
